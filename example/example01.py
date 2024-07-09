@@ -75,3 +75,5 @@ print(f'''
 {dan} x 7 = {dan * 7}
 {dan} x 8 = {dan * 8}
 {dan} x 9 = {dan * 9}''')
+
+#
