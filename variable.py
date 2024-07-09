@@ -167,9 +167,9 @@ print(bool(' '), bool('abc123'))
 # 현재 환율 1$ 1,382.12원
 # 주의! - input함수로 입력받은 값은 무조건 문자로 취급
 
-## dollar = input('달러는? ')
-## won = int(dollar) * 1382.12
-## print(dollar, won)
+dollar = input('달러는? ')
+won = int(dollar) * 1382.12
+print(dollar, won)
 
 # 문자열 템플릿
 # 파이썬에서 문자열 속에 변수를 포함시켜 출력할 때 유용하게 사용하는 방법
