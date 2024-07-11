@@ -77,3 +77,52 @@ print(f'''
 infectors = 2 ** 30
 
 print(f'30일 이후 예상 감염자 수 : {infectors}')
+
+
+
+# 할당 연산자
+
+# 논리 연산자
+
+# 논리 연산자 단축식 평가
+
+# 삼항 연산자
+# 조건문을 한 줄로 표현할 수 있는 연산자
+# 참일때 값 if 조건식 else 거짓일때 값
+
+myScore = 75
+result = '합격!' if myScore >= 90 else '불합격!'
+
+print(result)
+
+# 복리 계산기
+money = 5_000_000
+rate = 0.05
+money = money + (money * rate) # 1년후 총 금액
+money = money + (money * rate) # 1년후 총 금액
+money = money + (money * rate) # 1년후 총 금액
+money = money + (money * rate) # 1년후 총 금액
+money = money + (money * rate) # 1년후 총 금액
+
+print(f'5년 후 총 수령액 : {int(money):,} 원')
+
+# 범퍼카 탑승
+child = int(input('어린이의 신장을 입력하세요 : '))
+isRide = (child >= 120)
+
+print(f'{isRide}')
+
+
+# 범퍼카 탑승 가능 판별
+child = int(input('어린이의 신장을 입력하세요 : '))
+isRide = (child >= 120) & (child < 170)
+
+print(f'{isRide}')
+
+
+# 적자/흑자 판별
+income = int(input('수입은? '))
+outcome = int(input('지출은? '))
+
+result = '흑자' if income > outcome else '적자'
+print(f'{result}')
