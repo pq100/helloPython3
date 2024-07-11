@@ -169,9 +169,47 @@ print(grade)
 
 
 # 속도 위반 경고
+speed = int(input('자동차의 현재 속도는 : '))
+
+weban = ''
+if speed >= 50:
+    weban = '속도 위반!!'
+
+print(weban)
+
+
 # 자동 온도 조절 장치
+ondo = int(input('기계 온도를 입력하세요 : '))
+
+fen = ''
+if ondo >= 40:
+    fen = '가동'
+else:
+    if ondo <= 40:
+        fen = '중지'
+
+print(f'팬(Fan){fen} ')
+
+
 # 자동 주문 시스템
+auto = int(input('Good morning.\n Nice meet you.\n Where are you from?\n Plese select a number\n 1.대한민국 2.USA 3. 中國 '))
+
+lag = ''
+if auto == 1:
+    leg = '주문하시겠어요?'
+elif auto == 2:
+    leg = 'Would you like to order?'
+elif auto == 3:
+    leg = '您要点菜吗？'
+else:
+    leg = ('SORRY, I m not applying'
+           'Please choose between 12 and 3.')
+
+print(leg)
+
 # 국가 재난지원금 수령액 조회
+people = int(input('인원수를 입력하세요.'))
+
 # 개선 BMI 지수 출력
 # 버스 전용차로 단속
 # 마스크 구매 가능 요일 출력
