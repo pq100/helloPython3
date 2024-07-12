@@ -207,15 +207,144 @@ else:
 
 print(leg)
 
-# 국가 재난지원금 수령액 조회
-people = int(input('인원수를 입력하세요.'))
 
-# 개선 BMI 지수 출력
+# 국가 재난지원금 수령액 조회
+family = int(input('인원수를 입력하세요.'))
+
+result = '1,000,000원 지원'
+if family == 1:
+    result = '400,000원 지원'
+if family == 2:
+    result = '600,000원 지원'
+if family == 3:
+    result = '800,000원 지원'
+
+print(result)
+
+# 개선된 BMI 지수 출력
+bmi = float(input('BMI 지수를 입력하세요 : '))
+
+result = '저체중'
+if bmi <= 140:
+    result = '고도비만'
+elif bmi > 120:
+    result = '비만'
+elif bmi > 110:
+    result = '과체중'
+elif bmi > 90:
+    result = '정상체중'
+
+print(f'BMI 지수 : {bmi}, 진단 결과 : {result} 입니다.')
+
+
 # 버스 전용차로 단속
+msg1 = '''1. 월~금, 2. 토요일, 3. 공휴일
+요일을 선택하세요.'''
+msg2 = '''버스 전용차로 단속 중 입니다.
+1.버스, 2.승용차'''
+msg3 ='버스 전용차로 위반!'
+msg4 ='버스 입니다.'
+msg5 ='토요일 및 공휴일은 단속하지 않습니다.'
+
+dayweek = int(input(msg1))
+
+result = ''
+if dayweek == 1: # 평일 여부 확인
+    carType = int(input(msg2))
+    if carType != 1:           # 차량 종류 확인
+        result = msg3
+    else:
+        result = msg4
+else:
+    result = msg5
+
+print(result)
+
+
 # 마스크 구매 가능 요일 출력
+endBirthYear = int(input('출생연도 끝자리 입력 : '))
+age = int(input('만 나이 입력 : '))
+result = ''
+if age < 65:
+    # if endBirthYear == 1 or endBirthYear == 6:
+    #    result = '월요일 구매 가능합니다'
+    # elif endBirthYear == 2 or endBirthYear == 7:
+    #  result = '화요일 구매 가능합니다'
+    # elif endBirthYear == 3 or endBirthYear == 8:
+    #     result = '수요일 구매 가능합니다'
+    # elif endBirthYear == 4 or endBirthYear == 9:
+    #     result = '목요일 구매 가능합니다'
+    # elif endBirthYear == 5 or endBirthYear == 0:
+    #     result = '금요일 구매 가능합니다'
+    match endBirthYear:
+        case 1 | 6:
+            result = '월요일 구매 가능합니다'
+        case 2 | 7:
+            result = '화요일 구매 가능합니다.'
+        case 3 | 8:
+            result = '수요일 구매 가능합니다.'
+        case 4 | 9:
+            result = '목요일 구매 가능합니다.'
+        case 5 | 0:
+            result = '금요일 구매 가능합니다.'
+
+
+print(result)
 
 
 # 차량 2부제
-# 생존율 출력
-# 전기 요금 계산기
+from _datetime import datetime
+# day = int(input('오늘은 몇일? '))
+day = datetime.today().day
+carNum = int(input('차량 번호 4자리는? '))
 
+msg1 = '오늘 입차 : 번호가 홀수인 차량'
+msg2 = '귀하의 차량은 입차 불가능합니다.'
+if day % 2 == 0:
+    msg1 = '오늘 입차 : 번호가 짝수인 차량'
+
+if day % 2 == carNum % 2:
+    msg2 = '귀하의 차량은 입차 가능합니다.'
+
+print(f'''오늘 날짜 : {day} 일')
+{msg1}
+{msg2}''')
+
+
+
+# 생존율 출력
+msg = '최초 장비를 사용하기까지 걸린 시간(초)을 입력하세요.'
+time = int(input(msg))
+
+result = '25% 미만'
+if time <= 60: result = '85%'
+elif time <= 120: result = '76%'
+elif time <= 180: result = '66%'
+elif time <= 240: result = '57%'
+elif time <= 300: result = '47%'
+elif time <= 360: result = '35%'
+
+print(result)
+
+
+# 전기 요금 계산기
+basePrice = 0   # 기본 요금
+unitPrice = 0   # 단가
+PowerPrice = 0  # 전기 요금
+
+powerAmount = int(input('전기 사용량은?'))
+
+if powerAmount > 400:
+    basePrice = 7300
+    unitPrice = 280.6
+elif powerAmount > 200:
+    basePrice = 1600
+    unitPrice = 187.9
+
+PowerPrice = basePrice + (unitPrice * powerAmount)
+
+print(f'''
+사용량 : {powerAmount} kwh
+기본요금 : {basePrice} 원
+단가 : {unitPrice} 원
+★전기 요금★ : {PowerPrice}''')
