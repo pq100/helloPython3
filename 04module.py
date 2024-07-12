@@ -3,7 +3,7 @@
 # 코드 재사용: 한번 작성한 코드를 여러 번 사용 가능
 # 코드 관리: 큰 프로젝트를 작은 모듈로 나눠 관리 가능
 # 협업 : 여러 개발자가 각각 모듈을 개발하고 함께 사용
-
+import operator
 # 표준 모듈 : 파이썬에서 기본적으로 제공하는 모듈, 바로 사용 가능
 # 외부 모듈 : 다른 조직, 개발자가 만든 모듈, 별도 설치 필요
 # 사용자 정의 모듈: 직접 만든 모듈
@@ -40,12 +40,59 @@ print(dt.datetime.now()
 
 
 # operator 모듈
-
 # 긴급재난 지원금 대상자 판별
+import operator as op
+
+income = int(input('월소득을 입력하세요: '))
+isOther = int(input('다른 지원금을 받고 있습니까? 1: 받음 2: 받지 않음 '))
+tgIncome = 4_000_000
+
+# result = '수급대상자' if(operator.le(income, 4000000)) \
+#      & (operator.eq(is0ther,2)) else '수급 비대상자'
+
+result = '수급 대상자' if (op.and_
+                      (op.le(income, tgIncome),
+                       op.eq(isOther, 2))) else '수급 비대상자'
+
+print(result)
+
 
 # 수온 계산기
+import operator as op
+
+basetemp = 20
+
+deeps = int(input('수심을 입력하세요: '))
+# temp = basetemp - (deeps * 0.7)
+temp = op.sub(basetemp,
+       op.mul(op.floordiv(deeps, 10), 0.7))
+
+print(f' 수심 {deeps} m - 수온 {temp} ℃: ')
+
 
 # 자동차 주행거리 계산
+import operator as op
+
+speed = int(input('주행 속도 : '))
+time = int(input('주행 시간: '))
+
+# dist = speed * time
+dist = op.mul(speed,  time)
+print(f'주행 이동 거리 : {dist} km')
+
 
 # 컴퓨터 업무 수량 파악
+# 3 * 8 = comp * time
+# comp = 3 * 8 / time
+
+worktime = int(input('근무 시간을 입력하세요 : '))
+
+# comp = 3 * 8 / time
+# etcComp = 1 if (3 * 8 % worktime) > 0 else 0
+
+expr1 = op.mul(3,8)
+comp = op.floordiv(expr1, worktime)
+etcComp = 1 if (op.mod(expr1, worktime) > 0) else 0
+
+print(f'필요한 컴퓨터 : {comp + etcComp}')
 
