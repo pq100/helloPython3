@@ -55,6 +55,41 @@ elif cardno[:1] == '5':
 print(f'{cardno} / {result}')
 
 
+# 16 개선하기 - 리스트 / 반복문 / 함수
+price = 34_650
+paid = 50_000
+
+def compute_charge(price, paid):
+    charges = []
+    moneys = [50000, 10000, 5000, 1000, 500, 100, 50, 10]
+
+    charge = paid - price
+    for money in moneys:
+        charges.append(charge // money)
+        charge %= money
+
+    return charges
+
+charges = compute_charge(price, paid)
+
+result = f'''
+금액 : {price:,} 원
+지불 금액 : {paid:,} 원
+잔돈 : {paid - price:,} 원
+--------------------------
+'''
+
+moneys = [50000, 10000, 5000, 1000, 500, 100, 50, 10]
+for idx, m in enumerate(moneys):
+    result += f'{m}원 : {charges[idx]} 장/개\n'
+
+print(result)
 
 
+# 잔돈 구하는 함수 호출 및 테스트
+price = int(input('지불해야 할 금액은? '))
+paid = int(input('받은 금액은? '))
+compute_charge(price, paid)
+
+print(charges[1])
 
