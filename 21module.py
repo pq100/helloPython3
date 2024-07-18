@@ -66,3 +66,102 @@ print(val)
 # pip install scikit-learn
 # pip install pymysql
 # pip install fastapi
+
+# snicuz.example에 각 문제에 대한 모듈 작성
+# 단위 환산 (convertUnit/readUnit/printUnits)
+import snicuz.example as zex
+
+import snicuz.example as zex
+
+mm = zex.readUnit()
+units = zex.converUnit(mm)
+zex.printUnits(units)
+
+# 할인된 상품 가격표 출력 (discountPrice/readDiscount/printPrices)
+products = {'쌀':9900, '상추':1900, '고추':2900, '마늘':8900, '통닭':5600, '햄':6900, '치즈':3900}
+def readDiscount():
+    print('''
+    ----------------------------------
+    -- 한빛 마트 오늘의 할인 가격표 출력 --
+    ----------------------------------
+    ''', end='')
+    rate = float(input('오늘의 할인율은? '))
+    return rate
+
+def printPrice(dcprice, rate):
+    result = ''
+    for idx, k in enumerate(products):
+        result += f'{k:4s} : {products[k]:,d} 원 {rate} % DC -> {dcprice[idx]:,.0f} 원\n'
+        print(result)
+
+def discountPrice(rate):
+    dcprice = []
+    dc = (1 - (rate / 100))
+    for v in products.values():
+        dcprice.append( v * dc )
+    return dcprice
+
+rate = readDiscount()
+dcprice = discountPrice(rate)
+printPrice(dcprice, rate)
+
+
+# 주민번호 유효성 체크
+# 주민등록번호는 13자리로 이루어져 있으며, 앞 6자리는 생년월일, 뒤 7자리 중 첫 번째 숫자는 성별 코드, 나머지 6자리는 지역 및 순서 코드를 의미합니다.
+# 유효한 주민등록번호인지 확인하기 위해서는 다음과 같은 규칙을 따릅니다.
+# 주민등록번호 길이가 13자리인지 확인합니다.
+# 뒤 7자리 중 첫 번째 숫자가 1, 2, 3, 4 중 하나인지 확인합니다. (1, 3은 남자, 2, 4는 여자를 의미)
+# 뒤 7자리 중 첫 번째 숫자를 제외한 나머지 6자리가 유효한 값인지 확인합니다. (000001 ~ 899999 사이의 값)
+# 주민등록번호 유효성 검사 공식에 따라 계산한 결과가 맞는지 확인합니다.
+# 이 때 주민등록번호 유효성 검사 공식은 다음과 같습니다.
+
+# 주민등록번호 앞 12자리에 각각 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, 4, 5를 곱한 값을 모두 더하고
+# 그 결과값을 11로 나눈 나머지를 11에서 뺍니다.
+# 계산 결과값이 주민등록번호 마지막 자리 숫자와 일치하면 유효!
+# 1 2 3 4 5 6 - 1 2 3 4 5 6 7
+# * * * * * *   * * * * * * *
+# 2 3 4 5 6 7   8 9 2 3 4 5
+# 2+6+12+20+30+42+8+18+6+12+20+30
+# 11 - (206 % 11) = 3 ? 7
+# (checkJumin/readJumin/printJumin)
+
+sum = 0
+result = '주민번호 불일치!'
+
+jumin = input('주민번호는? (xxxxxxyyyyyyy)')
+sum += int(jumin[0]) * 2
+sum += int(jumin[1]) * 3
+sum += int(jumin[2]) * 4
+sum += int(jumin[3]) * 5
+sum += int(jumin[4]) * 6
+sum += int(jumin[5]) * 7
+sum += int(jumin[6]) * 8
+sum += int(jumin[7]) * 9
+sum += int(jumin[8]) * 2
+sum += int(jumin[9]) * 3
+sum += int(jumin[10]) * 4
+sum += int(jumin[11]) * 5
+
+checker = (11 - (sum % 11)) % 10
+if checker == int(jumin[12]): result = '주민번호 유효!'
+print(result)
+
+def checkJumin(Jumin):
+    result = '주민번호 불일치!'
+    sum = 0
+
+    weight = [2,3,4,5,6,7,8,9, 2,3,4,5]
+
+    for i in range(13):
+        sum += int(jumin[i]) * weight[i]
+
+    checker = (11 - (sum % 11)) % 10
+    if checker == int(jumin[12]): result = '주민번호 유효!'
+
+    return result
+
+import snicuz.example as zex
+
+zex.checkJumin('1234561234567')
+
+# zex.checkJumin2('123456-1234567')
