@@ -51,6 +51,20 @@ def readOneEmp(empid):
     conn.close()
     return emp
 
+#
+# empDAO.py
 
+import sqlite3
 
-
+#
+def deleteEmp(empid):
+    sql = 'delete from emp where empid = ?'
+    conn = sqlite3.connect('db/python.db')
+    cursor = conn.cursor()
+    params = (empid,)
+    cursor.execute(sql, params)
+    cnt = cursor.rowcount
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return cnt
