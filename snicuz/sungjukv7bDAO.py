@@ -52,5 +52,15 @@ def readOneSungJuk(sjno):
     return sj
 
 
-
+# 입력 받은 학생 번호로 데이터 삭제
+def deleteSungJuk(sjno):
+    sql = 'delete from sungjuk where sjno = ?'
+    conn = sqlite3.connect('db/python.db')
+    cursor = conn.cursor()
+    params = (sjno,)
+    cursor.execute(sql, params)
+    print(cursor.rowcount, '건의 데이터가 삭제됨!')
+    conn.commit()
+    cursor.close()
+    conn.close()
 
