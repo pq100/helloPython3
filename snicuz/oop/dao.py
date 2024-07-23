@@ -50,8 +50,24 @@ class SungJukDA0:
         return sjs
 
 
-    def selectone_sungjuk(self):
-        pass
+    def selectone_sungjuk(sjno):
+        sql = 'select * from sungjuk where sjno = ?'
+        conn, cursor = SungJukDA0._make_conn()
+        params = (sjno,)
+        cursor.execute(sql, params)
+        rs = cursor.fetchone()
+        if rs:
+            sj = SungJuk(rs[1], rs[2], rs[3], rs[4])
+            sj.sjno = rs[0]
+            sj.tot = rs[5]
+            sj.avg = rs[6]
+            sj.grd = rs[7]
+            sj.regdate = rs[8]
+        else:
+            sj = None
+
+        SungJukDA0._dis_conn(conn, cursor)
+        return sj
 
 
     def update_sungjuk(self):
