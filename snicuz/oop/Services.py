@@ -74,8 +74,9 @@ class SungJukService:
                       f'총점: {sj.tot}, 평균: {sj.avg:.1f}, 학점: {sj.grd}, 등록일: {sj.regdate}')
         print(result)
 
+
     @staticmethod
-    def modify_sungjuk(self):
+    def modify_sungjuk():
         pass
 
 
@@ -84,5 +85,8 @@ class SungJukService:
 
 
     @staticmethod
-    def remove_sungjuk(self):
-        pass
+    def remove_sungjuk():
+        sjno = input('삭제할 성적 데이터 번호는?')
+        cnt = sjdao.delete_sungjuk(sjno)
+        result = f'{cnt} 데이터 삭제가 완료되었습니다.'
+        print(result)

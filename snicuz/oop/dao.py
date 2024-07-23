@@ -73,6 +73,13 @@ class SungJukDA0:
     def update_sungjuk(self):
         pass
 
-
-    def delete_sungjuk(self):
-        pass
+    @staticmethod
+    def delete_sungjuk(sjno):
+        sql = 'delete from sungjuk where sjno = ?'
+        conn, cursor = SungJukDA0._make_conn()
+        params = (sjno,)
+        cursor.execute(sql, params)
+        cnt = cursor.rowcount
+        conn.commit()
+        SungJukDA0._dis_conn(conn, cursor)
+        return cnt

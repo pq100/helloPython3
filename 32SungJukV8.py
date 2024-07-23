@@ -21,13 +21,16 @@ while True:
         print('성적 데이터 추가')
         sjv8.add_sungjuk()
 
+
     elif menu == '2':
         print('성적 데이터 조회')
         sjv8.show_sungjuk()
 
+
     elif menu == '3':
         print('성적 데이터 상세조회')
         sjv8.showone_sungjuk()
+
 
     elif menu == '4':
         print('성적 데이터 수정')
@@ -37,6 +40,7 @@ while True:
     elif menu == '5':
         print('성적 데이터 삭제')
         sjv8.remove_sungjuk()
+
 
     elif menu == '0':
         print('프로그램 종료')
