@@ -25,6 +25,7 @@ while True:
 
     elif menu == '4':
         print('사원 데이터 수정')
+        emp.updateEmp()
 
     elif menu == '5':
         print('성적 데이터 삭제')
