@@ -64,3 +64,26 @@ def deleteSungJuk(sjno):
     cursor.close()
     conn.close()
 
+#
+def updateSungJuk(sj):
+    sql = 'update sungjuk set kor=?, eng=?, mat=?, tot=?, avg=?, grd=? \
+           where sjno = ?'
+    conn = sqlite3.connect('db/python.db')
+    cursor = conn.cursor()
+    params = (sj[1],sj[2],sj[3],sj[4],sj[5],sj[6],sj[7])
+    cursor.execute(sql, params)
+    print(cursor.rowcount, '건의 데이터 추가됨!')
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def modifySungJuk(sjno):
+    sql = 'update sungjuk set kor=?, eng=?, mat=?, tot=?, avg=?, grd=? where sjno = ?'
+    conn = sqlite3.connect('db/python.db')
+    cursor = conn.cursor()
+    params = (sjno,)
+    cursor.execute(sql, params)
+    print(cursor.rowcount, '건의 데이터가 수정됨!')
+    conn.commit()
+    cursor.close()
+    conn.close()
