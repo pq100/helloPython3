@@ -76,4 +76,5 @@ def updateEmp(emp):
     conn.commit()
     cursor.close()
     conn.close()
+
     return cnt
