@@ -114,7 +114,8 @@ class SungJukService:
 
 # 사원 클래스
 class EmpService:
-    def display_menu(self):
+    @staticmethod
+    def display_menu():
         main_menu = '''
     =========================
        - 사원 관리 프로그램 -
@@ -130,6 +131,7 @@ class EmpService:
         print(main_menu, end='')
         menu = input('=> 메뉴를 선택하세요 : ')
         return menu
+
 
     @staticmethod
     def read_emp():
@@ -155,12 +157,22 @@ class EmpService:
         emp.comm = float(emp.comm) if emp.comm != '0' else None
         emp.mgrid = int(emp.mgrid) if emp.mgrid != '0' else None
         emp.deptid = int(emp.deptid) if emp.deptid != '0' else None
-        cnt = EmpDAO.insert_emp(emp)
+        cnt = empdao.insert_emp(emp)
         print(f'{cnt} 건의 데이터가 추가됨!!')
+
 
     @staticmethod
     def show_emp():
-        pass
+        """
+        사원 테이블에서 사원번호, 이름, 이메일, 직책, 부서번호 출력
+        :return emps: 조회된 사원 정보
+        """
+        result = ''
+        emps = empdao.select_emp()
+        for emp in emps:
+            result += f'{emp.empid} {emp.fname} {emp.email} {emp.jobid} {emp.comm}\n'
+        print(result)
+
 
     @staticmethod
     def showone_emp():

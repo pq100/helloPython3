@@ -1,7 +1,7 @@
 # import sqlite3
 import pymysql
 
-from snicuz.oop.models import SungJuk
+from snicuz.oop.models import SungJuk, Employee
 
 host='13.208.165.126'
 user='clouds2024'
@@ -110,12 +110,26 @@ class SungJukDA0:
         return cnt
 
 #----------------------------------------------------------------------------------------------------
+class EmpDAO:
+    # 데이터베이스 연결객체와 커서 생성
+    @staticmethod
+    def _make_conn():
+        conn = pymysql.connect(host=host, user=user, password=passwd, database=dbname, charset='utf8')
+        cursor = conn.cursor()
+        return conn, cursor
+
+
+    # 데이터베이스 연결객체와 커서 종료
+    @staticmethod
+    def _dis_conn(conn, cursor):
+        cursor.close()
+        conn.close()
 
     # 사원 DAO 클래스
     @staticmethod
     def insert_emp(emp, EmpDAO=None):
-        sql = 'insert into emp values \
-           values (%s,%s,%s,%s, %s,%s,%s)'
+        sql = 'insert into emp (empid, fname, lname, email, phone, hdate, jobid, sal, comm, mgrid, deptid) \
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
         conn, cursor = EmpDAO._make_conn()
         params = (emp.empid, emp.fname, emp.lname, emp.email, emp.phone, emp.hdate, emp.jobid, emp.sal, emp.comm, emp.mgrid, emp.deptid)
         cursor.execute(sql, params)
@@ -123,3 +137,18 @@ class SungJukDA0:
         conn.commit()
         EmpDAO._dis_conn(conn, cursor)
         return cnt
+
+
+    @staticmethod
+    def select_emp():
+        emps = []
+        sql = 'select empid,fname,email,jobid,deptid from emp'
+        conn, cursor = EmpDAO._make_conn()
+        cursor.execute(sql)
+        rs = cursor.fetchall()
+        for r in rs:
+            emp = Employee(r[0], r[1], None, r[2], None, None, r[3], None, None, None, r[4])
+            emps.append(emp)
+
+        EmpDAO._dis_conn(conn, cursor)
+        return emps
