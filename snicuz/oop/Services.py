@@ -1,7 +1,10 @@
 # 성적 서비스 클래스
 
-from snicuz.oop.models import SungJuk
+from snicuz.oop.models import SungJuk, Employee
 from snicuz.oop.dao import SungJukDA0 as sjdao
+from snicuz.oop.dao import EmpDAO as empdao
+
+
 class SungJukService:
     # 데코레이터 : 함수에 추가 기능을 구현할 때 사용
     @staticmethod # 정적static 메서드 : 객체화 없이 바로 사용 가능한 메서드
@@ -10,7 +13,7 @@ class SungJukService:
     def display_menu():
         main_menu = '''
     =========================
-        성적 프로그램 v7b
+        성적 프로그램 v8
     =========================
        1. 성적 데이터 추가
        2. 성적 데이터 조회
@@ -106,3 +109,68 @@ class SungJukService:
         cnt = sjdao.delete_sungjuk(sjno)
         result = f'{cnt} 데이터 삭제가 완료되었습니다.'
         print(result)
+
+# -------------------------------------------------------------
+
+# 사원 클래스
+class EmpService:
+    def display_menu(self):
+        main_menu = '''
+    =========================
+       - 사원 관리 프로그램 -
+    =========================
+       1. 사원 데이터 추가
+       2. 사원 데이터 조회
+       3. 사원 데이터 상세조회
+       4. 사원 데이터 수정
+       5. 사원 데이터 삭제
+       0. 사원 관리 프로그램 종료
+    ========================= 
+    '''
+        print(main_menu, end='')
+        menu = input('=> 메뉴를 선택하세요 : ')
+        return menu
+
+    @staticmethod
+    def read_emp():
+        empid = input('사원 번호는? ')
+        fname = input('사원 이름은? ')
+        lname = input('사원 성은? ')
+        email = input('사원 이메일은? ')
+        phone = input('사원 전화번호는? ')
+        hdate = input('사원 입사일은? ')
+        jobid = input('사원 직책은? ')
+        sal = input('사원 급여는? ')
+        comm = input('사원 수당은? (없으면 0) ')
+        mgrid = input('사원 매니저 번호는? (없으면 0) ')
+        deptid = input('사원 부서 번호는? (없으면 0) ')
+
+        emp = Employee(empid, fname, lname, email, phone, hdate, jobid, sal, comm, mgrid, deptid)
+        return emp
+
+
+    @staticmethod
+    def add_emp():
+        emp = EmpService.read_emp()
+        emp.comm = float(emp.comm) if emp.comm != '0' else None
+        emp.mgrid = int(emp.mgrid) if emp.mgrid != '0' else None
+        emp.deptid = int(emp.deptid) if emp.deptid != '0' else None
+        cnt = EmpDAO.insert_emp(emp)
+        print(f'{cnt} 건의 데이터가 추가됨!!')
+
+    @staticmethod
+    def show_emp():
+        pass
+
+    @staticmethod
+    def showone_emp():
+        pass
+
+    @staticmethod
+    def modify_emp():
+        pass
+
+    @staticmethod
+    def remove_emp():
+        pass
+

@@ -108,3 +108,18 @@ class SungJukDA0:
         conn.commit()
         SungJukDA0._dis_conn(conn, cursor)
         return cnt
+
+#----------------------------------------------------------------------------------------------------
+
+    # 사원 DAO 클래스
+    @staticmethod
+    def insert_emp(emp, EmpDAO=None):
+        sql = 'insert into emp values \
+           values (%s,%s,%s,%s, %s,%s,%s)'
+        conn, cursor = EmpDAO._make_conn()
+        params = (emp.empid, emp.fname, emp.lname, emp.email, emp.phone, emp.hdate, emp.jobid, emp.sal, emp.comm, emp.mgrid, emp.deptid)
+        cursor.execute(sql, params)
+        cnt = cursor.rowcount
+        conn.commit()
+        EmpDAO._dis_conn(conn, cursor)
+        return cnt
