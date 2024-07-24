@@ -112,44 +112,41 @@ class SungJukService:
 
 # -------------------------------------------------------------
 
-# 사원 클래스
+# 사원 서비스 클래스
 class EmpService:
     @staticmethod
     def display_menu():
         main_menu = '''
-    =========================
-       - 사원 관리 프로그램 -
-    =========================
-       1. 사원 데이터 추가
-       2. 사원 데이터 조회
-       3. 사원 데이터 상세조회
-       4. 사원 데이터 수정
-       5. 사원 데이터 삭제
-       0. 사원 관리 프로그램 종료
-    ========================= 
-    '''
+        =========================
+           - 사원 관리 프로그램 -
+        =========================
+           1. 사원 데이터 추가
+           2. 사원 데이터 조회
+           3. 사원 데이터 상세조회
+           4. 사원 데이터 수정
+           5. 사원 데이터 삭제
+           0. 사원 관리 프로그램 종료
+        ========================= 
+        '''
         print(main_menu, end='')
         menu = input('=> 메뉴를 선택하세요 : ')
         return menu
 
-
     @staticmethod
     def read_emp():
-        empid = input('사원 번호는? ')
-        fname = input('사원 이름은? ')
-        lname = input('사원 성은? ')
-        email = input('사원 이메일은? ')
-        phone = input('사원 전화번호는? ')
-        hdate = input('사원 입사일은? ')
-        jobid = input('사원 직책은? ')
-        sal = input('사원 급여는? ')
-        comm = input('사원 수당은? (없으면 0) ')
-        mgrid = input('사원 매니저 번호는? (없으면 0) ')
-        deptid = input('사원 부서 번호는? (없으면 0) ')
-
-        emp = Employee(empid, fname, lname, email, phone, hdate, jobid, sal, comm, mgrid, deptid)
-        return emp
-
+        empid = input(f'사원 번호는? ')
+        fname = input(f'사원 이름은? ')
+        lname = input(f'사원 성은? ')
+        email = input(f'사원 이메일은? ')
+        phone = input(f'사원 전화번호는? ')
+        hdate = input(f'사원 입사일은? ')
+        jobid = input(f'사원 직책은? ')
+        sal = input(f'사원 급여는? ')
+        comm = input(f'사원 수당은? (없으면 0)')
+        mgrid = input(f'사원 매니저 번호는? (없으면 0)')
+        deptid = input(f'사원 부서 번호는? (없으면 0)')
+        return Employee(empid,fname,lname,email,phone,
+                        hdate,jobid,sal,comm,mgrid,deptid)
 
     @staticmethod
     def add_emp():
@@ -160,23 +157,29 @@ class EmpService:
         cnt = empdao.insert_emp(emp)
         print(f'{cnt} 건의 데이터가 추가됨!!')
 
-
     @staticmethod
     def show_emp():
         """
-        사원 테이블에서 사원번호, 이름, 이메일, 직책, 부서번호 출력
+        사원 테이블에서 사원번호,이름,이메일,직책,부서번호 출력
         :return emps: 조회된 사원 정보
         """
         result = ''
         emps = empdao.select_emp()
         for emp in emps:
-            result += f'{emp.empid} {emp.fname} {emp.email} {emp.jobid} {emp.comm}\n'
+            result += f'{emp.empid} {emp.fname} {emp.email} {emp.jobid} {emp.deptid}\n'
         print(result)
 
 
-    @staticmethod
-    def showone_emp():
-        pass
+@staticmethod
+def showOne_Emp():
+    empid = input('조회할 사원 번호는? ')
+    result = '데이터가 존재하지 않아요!!'
+    emp = empdao.selectone_emp(empid)
+    if emp:   # 조회한 데이터가 존재한다면
+        result = (f'{emp.empid} {emp.fname} {emp.lname} {emp.email} {emp.phone}\n'
+                  f'{emp.hdate} {emp.jobid} {emp.sal} {emp.comm} {emp.mgrid} {emp.deptid}')
+    print(result)
+
 
     @staticmethod
     def modify_emp():

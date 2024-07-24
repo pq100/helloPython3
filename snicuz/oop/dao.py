@@ -110,45 +110,63 @@ class SungJukDA0:
         return cnt
 
 #----------------------------------------------------------------------------------------------------
+# 사원 DAO 클래스
 class EmpDAO:
     # 데이터베이스 연결객체와 커서 생성
     @staticmethod
     def _make_conn():
-        conn = pymysql.connect(host=host, user=user, password=passwd, database=dbname, charset='utf8')
+        conn = pymysql.connect(host=host, user=user,
+                               password=passwd, database=dbname, charset='utf8')
         cursor = conn.cursor()
         return conn, cursor
 
-
     # 데이터베이스 연결객체와 커서 종료
     @staticmethod
-    def _dis_conn(conn, cursor):
+    def _dis_conn(conn,cursor):
         cursor.close()
         conn.close()
 
-    # 사원 DAO 클래스
+    # 사원 데이터 저장
     @staticmethod
-    def insert_emp(emp, EmpDAO=None):
-        sql = 'insert into emp (empid, fname, lname, email, phone, hdate, jobid, sal, comm, mgrid, deptid) \
-            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+    def insert_emp(emp):
+        sql = "insert into emp values " \
+              "(%s,%s,%s,%s, %s,%s,%s,%s, %s,%s,%s)"
         conn, cursor = EmpDAO._make_conn()
-        params = (emp.empid, emp.fname, emp.lname, emp.email, emp.phone, emp.hdate, emp.jobid, emp.sal, emp.comm, emp.mgrid, emp.deptid)
+        params = (emp.empid,emp.fname,emp.lname,emp.email,
+                  emp.phone,emp.hdate,emp.jobid,
+                  emp.sal,emp.comm,emp.mgrid,emp.deptid)
         cursor.execute(sql, params)
         cnt = cursor.rowcount
         conn.commit()
         EmpDAO._dis_conn(conn, cursor)
         return cnt
 
-
     @staticmethod
     def select_emp():
         emps = []
         sql = 'select empid,fname,email,jobid,deptid from emp'
-        conn, cursor = EmpDAO._make_conn()
+        conn,cursor = EmpDAO._make_conn()
         cursor.execute(sql)
         rs = cursor.fetchall()
         for r in rs:
-            emp = Employee(r[0], r[1], None, r[2], None, None, r[3], None, None, None, r[4])
+            emp = Employee(r[0], r[1], None, r[2],
+                           None, None, r[3],
+                           None, None, None, r[4])
             emps.append(emp)
 
         EmpDAO._dis_conn(conn, cursor)
         return emps
+
+@staticmethod
+def selectone_emp(empid):
+    sql = 'SELECT * FROM emp WHERE empid = %s'
+    conn, cursor = EmpDAO._make_conn()
+    params = (empid,)
+    cursor.execute(sql, params)
+    rs = cursor.fetchone()
+    if rs:
+        emp = Employee(rs[0], rs[1], rs[2], rs[3], rs[4], rs[5], rs[6], rs[7], rs[8], rs[9], rs[10])
+    else:
+        emp = None
+    EmpDAO._dis_conn(conn, cursor)
+    return emp

@@ -1,6 +1,7 @@
 
 import snicuz.empDAO as empdao
 
+
 def displayMenu():
     main_menu = '''
     =========================
