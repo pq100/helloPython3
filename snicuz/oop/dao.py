@@ -70,8 +70,20 @@ class SungJukDA0:
         return sj
 
 
-    def update_sungjuk(self):
-        pass
+
+    @staticmethod
+    def update_sungjuk(sj):
+        sql = 'update sungjuk set kor=?, eng=?, mat=?, tot=?, avg=?, grd=? \
+               where sjno = ?'
+        conn, cursor = SungJukDA0._make_conn()
+        cursor = conn.cursor()
+        params = (sj.kor, sj.eng, sj.mat, sj.tot, sj.avg, sj.grd, sj.sjno)
+        cursor.execute(sql, params)
+        cnt = cursor.rowcount
+        conn.commit()
+        SungJukDA0._dis_conn(conn, cursor)
+        return cnt
+
 
     @staticmethod
     def delete_sungjuk(sjno):

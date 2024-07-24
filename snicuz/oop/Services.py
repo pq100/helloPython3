@@ -77,11 +77,27 @@ class SungJukService:
 
     @staticmethod
     def modify_sungjuk():
-        pass
+        sjno = input('수정할 학생번호는? ')
+        sj = sjdao.selectone_sungjuk(sjno)  # 단일 데이터 조회로 수정
+        result = '수정할 데이터가 존재하지 않아요!'
+        if sj:  # 수정할 데이터가 존재한다면
+            sj = SungJukService.readagain_sungjuk(sj)  # 수정할 데이터 입력 받기
+            cnt = sjdao.update_sungjuk(sj) # 수정된 데이터 업데이트
+            result = f'{cnt} 건의 데이터 수정됨!'
+
+        print(result)
 
 
-    def readagain_sungjuk(self):
-        pass
+
+    def readagain_sungjuk(sj):
+        nsj = SungJuk(sj.name, None, None, None)
+        nsj.kor = int(input(f'{sj.name} 학생의 새로운 국어는? ({sj.kor})'))
+        nsj.eng = int(input(f'{sj.name} 학생의 새로운 영어는? ({sj.eng})'))
+        nsj.mat = int(input(f'{sj.name} 학생의 새로운 수학는? ({sj.mat})'))
+        SungJukService.compute_sungjuk(nsj)
+        nsj.sjno = sj.sjno # nsj[7] - 학생 번호
+        print(nsj)
+        return nsj
 
 
     @staticmethod
