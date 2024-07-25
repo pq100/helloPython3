@@ -183,3 +183,17 @@ class EmpDAO:
         conn.commit()
         EmpDAO._dis_conn(conn, cursor)
         return cnt
+
+    @staticmethod
+    def update_emp(emp):
+        sql = 'update emp set email=%s, phone=%s, jobid=%s, ' \
+              'sal=%s, comm=%s, mgrid=%s, deptid=%s ' \
+              'where empid = %s'
+        conn, cursor = EmpDAO._make_conn()
+        params = (emp.email,emp.phone,emp.jobid,emp.sal,
+                  emp.comm,emp.mgrid,emp.deptid, emp.empid)
+        cursor.execute(sql, params)
+        cnt = cursor.rowcount
+        conn.commit()
+        EmpDAO._dis_conn(conn, cursor)
+        return cnt

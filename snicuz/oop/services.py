@@ -179,8 +179,33 @@ class EmpService:
                       f'{emp.hdate} {emp.jobid} {emp.sal} {emp.comm} {emp.mgrid} {emp.deptid}')
         print(result)
 
-    def modify_emp(self):
-        pass
+    @staticmethod
+    def modify_emp():
+        empid = input('수정할 사원번호는? ')
+        emp = empdao.selectone_emp(empid)
+        result = '수정할 데이터가 존재하지 않아요!'
+
+        if emp:
+            emp = EmpService.readagain_emp(emp)
+            cnt = empdao.update_emp(emp)
+            result = f'{cnt}건의 데이터가 수정됨!!'
+
+        print(result)
+
+    @staticmethod
+    def readagain_emp(emp):
+        email = input(f'사원 이메일은? ({emp.email})')
+        phone = input(f'사원 전화번호는? ({emp.phone})')
+        jobid = input(f'사원 직책은? ({emp.jobid})')
+        sal = input(f'사원 급여는? ({emp.sal})')
+        comm = input(f'사원 수당은? (없으면 0)({emp.comm})')
+        mgrid = input(f'사원 매니저 번호는? (없으면 0)({emp.mgrid})')
+        deptid = input(f'사원 부서 번호는? (없으면 0)({emp.deptid})')
+        comm = float(comm) if comm != '0' else None
+        mgrid = int(mgrid) if mgrid != '0' else None
+        deptid = int(deptid) if deptid != '0' else None
+        return Employee(emp.empid,emp.fname,emp.lname,email,phone,
+                        emp.hdate,jobid,sal,comm,mgrid,deptid)
 
     @staticmethod
     def remove_emp():
@@ -190,5 +215,6 @@ class EmpService:
         if cnt > 0:
             result = f'{cnt}건의 데이터가 삭제됨!!'
         print(result)
+
 
 
