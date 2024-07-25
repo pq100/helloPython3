@@ -169,23 +169,26 @@ class EmpService:
             result += f'{emp.empid} {emp.fname} {emp.email} {emp.jobid} {emp.deptid}\n'
         print(result)
 
-
-@staticmethod
-def showOne_Emp():
-    empid = input('조회할 사원 번호는? ')
-    result = '데이터가 존재하지 않아요!!'
-    emp = empdao.selectone_emp(empid)
-    if emp:   # 조회한 데이터가 존재한다면
-        result = (f'{emp.empid} {emp.fname} {emp.lname} {emp.email} {emp.phone}\n'
-                  f'{emp.hdate} {emp.jobid} {emp.sal} {emp.comm} {emp.mgrid} {emp.deptid}')
-    print(result)
-
-
     @staticmethod
-    def modify_emp():
+    def showone_emp():
+        empid = input('조회할 사원 번호는? ')
+        result = '데이터가 존재하지 않아요!!'
+        emp = empdao.selectone_emp(empid)
+        if emp:   # 조회한 데이터가 존재한다면
+            result = (f'{emp.empid} {emp.fname} {emp.lname} {emp.email} {emp.phone}\n'
+                      f'{emp.hdate} {emp.jobid} {emp.sal} {emp.comm} {emp.mgrid} {emp.deptid}')
+        print(result)
+
+    def modify_emp(self):
         pass
 
     @staticmethod
     def remove_emp():
-        pass
+        empid = input('삭제할 사원의 사원번호는? ')
+        result = '데이터가 존재하지 않아요!!'
+        cnt = empdao.delete_emp(empid)
+        if cnt > 0:
+            result = f'{cnt}건의 데이터가 삭제됨!!'
+        print(result)
+
 

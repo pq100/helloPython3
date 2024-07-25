@@ -157,16 +157,29 @@ class EmpDAO:
         EmpDAO._dis_conn(conn, cursor)
         return emps
 
-@staticmethod
-def selectone_emp(empid):
-    sql = 'SELECT * FROM emp WHERE empid = %s'
-    conn, cursor = EmpDAO._make_conn()
-    params = (empid,)
-    cursor.execute(sql, params)
-    rs = cursor.fetchone()
-    if rs:
-        emp = Employee(rs[0], rs[1], rs[2], rs[3], rs[4], rs[5], rs[6], rs[7], rs[8], rs[9], rs[10])
-    else:
-        emp = None
-    EmpDAO._dis_conn(conn, cursor)
-    return emp
+    @staticmethod
+    def selectone_emp(empid):
+        sql = 'select * from emp where empid = %s'
+        conn, cursor = EmpDAO._make_conn()
+        params = (empid,)
+        cursor.execute(sql, params)
+        rs = cursor.fetchone()
+        if rs:
+            emp = Employee(rs[0],rs[1],rs[2],rs[3],rs[4],rs[5],
+                           rs[6],rs[7],rs[8],rs[9],rs[10])
+        else:
+            emp = None
+
+        EmpDAO._dis_conn(conn, cursor)
+        return emp
+
+    @staticmethod
+    def delete_emp(empid):
+        sql = "delete from emp where empid = %s"
+        conn, cursor = EmpDAO._make_conn()
+        params = (empid,)
+        cursor.execute(sql, params)
+        cnt = cursor.rowcount
+        conn.commit()
+        EmpDAO._dis_conn(conn, cursor)
+        return cnt
